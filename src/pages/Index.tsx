@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Slider } from '@/components/ui/slider';
-import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Select,
   SelectContent,
@@ -30,6 +30,8 @@ interface Product {
   badge?: string;
   rating: number;
   reviews: number;
+  brand: string;
+  inStock: boolean;
 }
 
 interface CartItem extends Product {
@@ -43,9 +45,11 @@ const products: Product[] = [
     price: 12990,
     image: 'https://cdn.poehali.dev/projects/1506aa6c-1df7-4f63-9760-8bcf59a42578/files/b7c5a1c6-0561-4a1e-87c6-ab7a39a18588.jpg',
     category: 'Аудио',
+    brand: 'Sony',
     badge: 'ХИТ',
     rating: 4.8,
-    reviews: 234
+    reviews: 234,
+    inStock: true
   },
   {
     id: 2,
@@ -53,9 +57,11 @@ const products: Product[] = [
     price: 54990,
     image: 'https://cdn.poehali.dev/projects/1506aa6c-1df7-4f63-9760-8bcf59a42578/files/0d29c596-d821-4020-bc2d-d74ddb82c0a4.jpg',
     category: 'Смартфоны',
+    brand: 'Samsung',
     badge: 'НОВИНКА',
     rating: 4.9,
-    reviews: 567
+    reviews: 567,
+    inStock: true
   },
   {
     id: 3,
@@ -63,9 +69,11 @@ const products: Product[] = [
     price: 89990,
     image: 'https://cdn.poehali.dev/projects/1506aa6c-1df7-4f63-9760-8bcf59a42578/files/35242471-c1af-4b43-aa00-2dccf5cc3e37.jpg',
     category: 'Ноутбуки',
+    brand: 'Apple',
     badge: 'ХИТ',
     rating: 4.7,
-    reviews: 189
+    reviews: 189,
+    inStock: true
   },
   {
     id: 4,
@@ -73,8 +81,10 @@ const products: Product[] = [
     price: 8990,
     image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&h=500&fit=crop',
     category: 'Носимые устройства',
+    brand: 'Xiaomi',
     rating: 4.6,
-    reviews: 142
+    reviews: 142,
+    inStock: false
   },
   {
     id: 5,
@@ -82,8 +92,10 @@ const products: Product[] = [
     price: 7990,
     image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&h=500&fit=crop',
     category: 'Аудио',
+    brand: 'Sony',
     rating: 4.5,
-    reviews: 289
+    reviews: 289,
+    inStock: true
   },
   {
     id: 6,
@@ -91,37 +103,63 @@ const products: Product[] = [
     price: 32990,
     image: 'https://images.unsplash.com/photo-1561154464-82e9adf32764?w=500&h=500&fit=crop',
     category: 'Планшеты',
+    brand: 'Huawei',
     badge: 'НОВИНКА',
     rating: 4.8,
-    reviews: 156
+    reviews: 156,
+    inStock: true
   }
 ];
 
-const categories = ['Все', 'Смартфоны', 'Ноутбуки', 'Планшеты', 'Аудио', 'Носимые устройства'];
+const categories = [
+  { name: 'Все', icon: 'Grid3x3', color: 'text-gray-400' },
+  { name: 'Смартфоны', icon: 'Smartphone', color: 'text-blue-400' },
+  { name: 'Ноутбуки', icon: 'Laptop', color: 'text-purple-400' },
+  { name: 'Планшеты', icon: 'Tablet', color: 'text-green-400' },
+  { name: 'Аудио', icon: 'Headphones', color: 'text-orange-400' },
+  { name: 'Носимые устройства', icon: 'Watch', color: 'text-pink-400' }
+];
+
+const brands = ['Apple', 'Samsung', 'Sony', 'Xiaomi', 'Huawei'];
 
 export default function Index() {
   const [selectedCategory, setSelectedCategory] = useState('Все');
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [priceRange, setPriceRange] = useState([0, 100000]);
   const [minRating, setMinRating] = useState(0);
+  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+  const [showInStock, setShowInStock] = useState(false);
   const [sortBy, setSortBy] = useState('popular');
+
+  const toggleBrand = (brand: string) => {
+    setSelectedBrands(prev => 
+      prev.includes(brand) 
+        ? prev.filter(b => b !== brand)
+        : [...prev, brand]
+    );
+  };
+
+  const resetFilters = () => {
+    setPriceRange([0, 100000]);
+    setMinRating(0);
+    setShowInStock(false);
+    setSelectedBrands([]);
+  };
 
   const filteredProducts = products
     .filter(p => selectedCategory === 'Все' || p.category === selectedCategory)
     .filter(p => p.price >= priceRange[0] && p.price <= priceRange[1])
     .filter(p => p.rating >= minRating)
+    .filter(p => selectedBrands.length === 0 || selectedBrands.includes(p.brand))
+    .filter(p => !showInStock || p.inStock)
     .sort((a, b) => {
       if (sortBy === 'price-asc') return a.price - b.price;
       if (sortBy === 'price-desc') return b.price - a.price;
       if (sortBy === 'rating') return b.rating - a.rating;
       return 0;
     });
-
-  const getCategoryCount = (category: string) => {
-    if (category === 'Все') return products.length;
-    return products.filter(p => p.category === category).length;
-  };
 
   const addToCart = (product: Product) => {
     setCartItems(prev => {
@@ -156,29 +194,40 @@ export default function Index() {
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  const FilterSidebar = () => (
+  const FilterContent = () => (
     <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h3 className="font-semibold text-lg">Фильтры</h3>
+        <Button variant="ghost" size="sm" onClick={resetFilters}>
+          <Icon name="RotateCcw" size={16} className="mr-1" />
+          Сбросить
+        </Button>
+      </div>
+
+      <Separator />
+
       <div>
-        <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-          <Icon name="LayoutGrid" size={20} />
+        <h3 className="font-semibold mb-4 flex items-center gap-2">
+          <Icon name="LayoutGrid" size={18} className="text-primary" />
           Категории
-        </h2>
-        <nav className="space-y-1">
+        </h3>
+        <nav className="grid grid-cols-1 gap-2">
           {categories.map(cat => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-lg transition-colors ${
-                selectedCategory === cat
-                  ? 'bg-primary text-primary-foreground'
-                  : 'hover:bg-muted'
-              }`}
+            <Button
+              key={cat.name}
+              variant={selectedCategory === cat.name ? "default" : "outline"}
+              className="justify-start h-auto py-3"
+              onClick={() => {
+                setSelectedCategory(cat.name);
+                setIsMobileMenuOpen(false);
+              }}
             >
-              <span className="font-medium">{cat}</span>
-              <Badge variant={selectedCategory === cat ? "secondary" : "outline"}>
-                {getCategoryCount(cat)}
-              </Badge>
-            </button>
+              <Icon name={cat.icon as any} size={20} className={`mr-3 ${selectedCategory === cat.name ? '' : cat.color}`} />
+              <span className="flex-1 text-left">{cat.name}</span>
+              {selectedCategory === cat.name && (
+                <Icon name="Check" size={18} className="ml-2" />
+              )}
+            </Button>
           ))}
         </nav>
       </div>
@@ -186,8 +235,8 @@ export default function Index() {
       <Separator />
 
       <div>
-        <h3 className="text-sm font-semibold mb-4 flex items-center gap-2">
-          <Icon name="DollarSign" size={18} />
+        <h3 className="font-semibold mb-4 flex items-center gap-2">
+          <Icon name="DollarSign" size={18} className="text-primary" />
           Цена
         </h3>
         <div className="space-y-4">
@@ -196,7 +245,7 @@ export default function Index() {
             onValueChange={setPriceRange}
             max={100000}
             step={1000}
-            className="mb-2"
+            className="w-full"
           />
           <div className="flex items-center justify-between text-sm text-muted-foreground">
             <span>{priceRange[0].toLocaleString('ru-RU')} ₽</span>
@@ -208,49 +257,70 @@ export default function Index() {
       <Separator />
 
       <div>
-        <h3 className="text-sm font-semibold mb-4 flex items-center gap-2">
-          <Icon name="Star" size={18} />
-          Рейтинг
+        <h3 className="font-semibold mb-4 flex items-center gap-2">
+          <Icon name="Sparkles" size={18} className="text-primary" />
+          Бренды
         </h3>
-        <div className="space-y-2">
-          {[4.5, 4.0, 3.5, 0].map(rating => (
-            <button
-              key={rating}
-              onClick={() => setMinRating(rating)}
-              className={`w-full flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
-                minRating === rating
-                  ? 'bg-primary text-primary-foreground'
-                  : 'hover:bg-muted'
-              }`}
-            >
-              <div className="flex">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Icon
-                    key={i}
-                    name="Star"
-                    size={14}
-                    className={i < Math.floor(rating) ? 'text-yellow-500 fill-yellow-500' : 'text-muted-foreground'}
-                  />
-                ))}
-              </div>
-              {rating > 0 ? `${rating}+` : 'Все'}
-            </button>
+        <div className="space-y-3">
+          {brands.map(brand => (
+            <div key={brand} className="flex items-center space-x-3">
+              <Checkbox
+                id={brand}
+                checked={selectedBrands.includes(brand)}
+                onCheckedChange={() => toggleBrand(brand)}
+              />
+              <label
+                htmlFor={brand}
+                className="text-sm font-medium leading-none cursor-pointer"
+              >
+                {brand}
+              </label>
+            </div>
           ))}
         </div>
       </div>
 
-      <Button
-        variant="outline"
-        className="w-full"
-        onClick={() => {
-          setSelectedCategory('Все');
-          setPriceRange([0, 100000]);
-          setMinRating(0);
-        }}
-      >
-        <Icon name="RotateCcw" size={18} className="mr-2" />
-        Сбросить фильтры
-      </Button>
+      <Separator />
+
+      <div>
+        <h3 className="font-semibold mb-4 flex items-center gap-2">
+          <Icon name="Star" size={18} className="text-primary" />
+          Минимальный рейтинг
+        </h3>
+        <div className="grid grid-cols-2 gap-2">
+          {[4.5, 4.0, 3.5, 3.0].map(rating => (
+            <Button
+              key={rating}
+              variant={minRating === rating ? "default" : "outline"}
+              size="sm"
+              className="justify-center"
+              onClick={() => setMinRating(minRating === rating ? 0 : rating)}
+            >
+              <Icon name="Star" size={14} className="text-yellow-500 fill-yellow-500 mr-1" />
+              <span>{rating}+</span>
+            </Button>
+          ))}
+        </div>
+      </div>
+
+      <Separator />
+
+      <Card className="p-4 bg-primary/5 border-primary/20">
+        <div className="flex items-center space-x-3">
+          <Checkbox
+            id="inStock"
+            checked={showInStock}
+            onCheckedChange={(checked) => setShowInStock(checked as boolean)}
+          />
+          <label
+            htmlFor="inStock"
+            className="text-sm font-medium leading-none cursor-pointer flex items-center gap-2"
+          >
+            <Icon name="PackageCheck" size={16} className="text-primary" />
+            Только в наличии
+          </label>
+        </div>
+      </Card>
     </div>
   );
 
@@ -297,7 +367,7 @@ export default function Index() {
       <div className="relative h-[400px] bg-gradient-to-br from-primary/10 via-background to-accent/10 flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(239,68,68,0.15),transparent_50%),radial-gradient(circle_at_70%_50%,rgba(239,68,68,0.1),transparent_50%)]"></div>
         <div className="container mx-auto px-4 z-10 text-center">
-          <h2 className="text-5xl font-bold mb-4">
+          <h2 className="text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
             Новейшая электроника
           </h2>
           <p className="text-xl text-muted-foreground mb-8">Гаджеты и аксессуары для вашего образа жизни</p>
@@ -310,41 +380,53 @@ export default function Index() {
 
       <div className="container mx-auto px-4 py-8">
         <div className="flex gap-8">
-          <aside className="hidden lg:block w-80 flex-shrink-0">
-            <Card className="p-6 sticky top-24">
-              <FilterSidebar />
-            </Card>
+          <aside className="hidden lg:block w-72 flex-shrink-0">
+            <div className="sticky top-24 space-y-4">
+              <Card className="p-6 shadow-lg border-2">
+                <FilterContent />
+              </Card>
+              
+              <Card className="p-6 bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Icon name="TrendingUp" size={20} className="text-primary" />
+                    <h3 className="font-semibold">Акция дня!</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Скидка до 30% на смартфоны и аксессуары
+                  </p>
+                  <Button variant="default" size="sm" className="w-full">
+                    Смотреть акции
+                  </Button>
+                </div>
+              </Card>
+            </div>
           </aside>
 
           <main className="flex-1">
             <div className="mb-6 flex items-center justify-between flex-wrap gap-4">
-              <div>
+              <div className="flex items-center gap-4">
                 <h2 className="text-3xl font-bold">
                   {selectedCategory === 'Все' ? 'Популярные товары' : selectedCategory}
                 </h2>
-                <p className="text-muted-foreground mt-1">
-                  Найдено товаров: {filteredProducts.length}
-                </p>
+                <Badge variant="secondary" className="text-sm">
+                  {filteredProducts.length} товаров
+                </Badge>
               </div>
               
               <div className="flex items-center gap-3">
-                <Sheet>
-                  <Button variant="outline" className="lg:hidden">
-                    <Icon name="Filter" size={20} className="mr-2" />
-                    Фильтры
-                  </Button>
-                  <SheetContent side="left" className="w-80">
-                    <SheetHeader>
-                      <SheetTitle>Фильтры</SheetTitle>
-                    </SheetHeader>
-                    <div className="mt-6">
-                      <FilterSidebar />
-                    </div>
-                  </SheetContent>
-                </Sheet>
-
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="lg:hidden"
+                  onClick={() => setIsMobileMenuOpen(true)}
+                >
+                  <Icon name="Filter" size={18} className="mr-2" />
+                  Фильтры
+                </Button>
+                
                 <Select value={sortBy} onValueChange={setSortBy}>
-                  <SelectTrigger className="w-[200px]">
+                  <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Сортировка" />
                   </SelectTrigger>
                   <SelectContent>
@@ -357,19 +439,26 @@ export default function Index() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
               {filteredProducts.map(product => (
-                <Card key={product.id} className="overflow-hidden group hover:shadow-xl hover:shadow-primary/10 transition-all duration-300">
+                <Card key={product.id} className="overflow-hidden group hover:shadow-lg transition-shadow">
                   <div className="relative aspect-square overflow-hidden bg-muted">
                     <img 
                       src={product.image} 
                       alt={product.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     {product.badge && (
-                      <Badge className="absolute top-3 right-3 bg-primary">
+                      <Badge className="absolute top-3 right-3">
                         {product.badge}
                       </Badge>
+                    )}
+                    {!product.inStock && (
+                      <div className="absolute inset-0 bg-background/80 flex items-center justify-center">
+                        <Badge variant="secondary" className="text-lg px-4 py-2">
+                          Нет в наличии
+                        </Badge>
+                      </div>
                     )}
                     <Button
                       variant="secondary"
@@ -380,51 +469,52 @@ export default function Index() {
                     </Button>
                   </div>
                   
-                  <div className="p-5">
-                    <div className="text-xs text-primary font-medium mb-2">{product.category}</div>
-                    <h3 className="font-semibold text-lg mb-3 line-clamp-2 min-h-[3.5rem]">{product.title}</h3>
+                  <div className="p-4">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-sm text-muted-foreground">{product.category}</span>
+                      <span className="text-xs text-muted-foreground">{product.brand}</span>
+                    </div>
+                    <h3 className="font-semibold mb-2 line-clamp-2">{product.title}</h3>
                     
-                    <div className="flex items-center gap-2 mb-4">
+                    <div className="flex items-center gap-2 mb-3">
                       <div className="flex items-center">
                         <Icon name="Star" size={16} className="text-yellow-500 fill-yellow-500" />
                         <span className="ml-1 text-sm font-medium">{product.rating}</span>
                       </div>
-                      <span className="text-xs text-muted-foreground">({product.reviews} отзывов)</span>
+                      <span className="text-sm text-muted-foreground">({product.reviews})</span>
                     </div>
                     
                     <div className="flex items-center justify-between">
                       <div className="text-2xl font-bold">
                         {product.price.toLocaleString('ru-RU')} ₽
                       </div>
-                      <Button onClick={() => addToCart(product)} size="sm">
-                        <Icon name="ShoppingCart" size={16} className="mr-2" />
-                        Купить
+                      <Button 
+                        onClick={() => addToCart(product)}
+                        disabled={!product.inStock}
+                        size="sm"
+                      >
+                        <Icon name="ShoppingCart" size={16} className="mr-1" />
+                        {product.inStock ? 'В корзину' : 'Нет'}
                       </Button>
                     </div>
                   </div>
                 </Card>
               ))}
             </div>
-
-            {filteredProducts.length === 0 && (
-              <div className="text-center py-20">
-                <Icon name="Package" size={64} className="mx-auto text-muted-foreground mb-4" />
-                <h3 className="text-2xl font-semibold mb-2">Товары не найдены</h3>
-                <p className="text-muted-foreground mb-6">Попробуйте изменить фильтры</p>
-                <Button
-                  onClick={() => {
-                    setSelectedCategory('Все');
-                    setPriceRange([0, 100000]);
-                    setMinRating(0);
-                  }}
-                >
-                  Сбросить фильтры
-                </Button>
-              </div>
-            )}
           </main>
         </div>
       </div>
+
+      <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+        <SheetContent side="left" className="w-full sm:max-w-md overflow-y-auto">
+          <SheetHeader>
+            <SheetTitle>Фильтры</SheetTitle>
+          </SheetHeader>
+          <div className="mt-6">
+            <FilterContent />
+          </div>
+        </SheetContent>
+      </Sheet>
 
       <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
         <SheetContent className="w-full sm:max-w-lg">
