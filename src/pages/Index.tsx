@@ -218,29 +218,30 @@ const products: Product[] = [
     price: 99990,
     image: 'https://cdn.poehali.dev/projects/1506aa6c-1df7-4f63-9760-8bcf59a42578/files/0d29c596-d821-4020-bc2d-d74ddb82c0a4.jpg',
     category: 'Смартфоны',
-    brand: 'Samsung',
-    rating: 4.7,
-    reviews: 389,
+    brand: 'Apple',
+    rating: 4.9,
+    reviews: 789,
     inStock: true
   },
   {
     id: 17,
-    title: 'Портативная колонка JBL Style',
-    price: 7990,
-    image: 'https://cdn.poehali.dev/projects/1506aa6c-1df7-4f63-9760-8bcf59a42578/files/f1a696f6-30ff-4ac3-92ea-b5a8b41da589.jpg',
-    category: 'Аудио',
-    brand: 'Sony',
-    rating: 4.5,
-    reviews: 298,
+    title: 'Ноутбук MacBook Pro M3',
+    price: 149990,
+    image: 'https://cdn.poehali.dev/projects/1506aa6c-1df7-4f63-9760-8bcf59a42578/files/35242471-c1af-4b43-aa00-2dccf5cc3e37.jpg',
+    category: 'Ноутбуки',
+    brand: 'Apple',
+    badge: 'НОВИНКА',
+    rating: 4.9,
+    reviews: 456,
     inStock: true
   },
   {
     id: 18,
-    title: 'iPhone 15 Pro Max',
-    price: 99990,
-    image: 'https://images.unsplash.com/photo-1592286927505-c6d5901c5c39?w=500&h=500&fit=crop',
-    category: 'Смартфоны',
-    brand: 'Samsung',
+    title: 'Планшет iPad Pro 12.9',
+    price: 79990,
+    image: 'https://cdn.poehali.dev/projects/1506aa6c-1df7-4f63-9760-8bcf59a42578/files/75f9ad18-b64d-440c-aae2-eb3e08a4541f.jpg',
+    category: 'Планшеты',
+    brand: 'Apple',
     badge: 'НОВИНКА',
     rating: 4.9,
     reviews: 834,
@@ -254,7 +255,9 @@ const categories = [
   { name: 'Ноутбуки', icon: 'Laptop', color: 'text-purple-400' },
   { name: 'Планшеты', icon: 'Tablet', color: 'text-green-400' },
   { name: 'Аудио', icon: 'Headphones', color: 'text-orange-400' },
-  { name: 'Носимые устройства', icon: 'Watch', color: 'text-pink-400' }
+  { name: 'Носимые устройства', icon: 'Watch', color: 'text-pink-400' },
+  { name: 'Аксессуары', icon: 'Cable', color: 'text-cyan-400' },
+  { name: 'Гаджеты', icon: 'Gamepad2', color: 'text-yellow-400' }
 ];
 
 const brands = ['Apple', 'Samsung', 'Sony', 'Xiaomi', 'Huawei'];
