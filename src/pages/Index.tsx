@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { Card } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet";
 
 interface Product {
@@ -31,7 +31,7 @@ const products: Product[] = [
     id: 1,
     title: 'Беспроводные наушники Premium',
     price: 12990,
-    image: 'https://cdn.poehali.dev/projects/1506aa6c-1df7-4f63-9760-8bcf59a42578/files/9d601de0-f00f-4adb-9cbe-899ad5a49120.jpg',
+    image: 'https://cdn.poehali.dev/projects/1506aa6c-1df7-4f63-9760-8bcf59a42578/files/b7c5a1c6-0561-4a1e-87c6-ab7a39a18588.jpg',
     category: 'Аудио',
     badge: 'ХИТ',
     rating: 4.8,
@@ -41,7 +41,7 @@ const products: Product[] = [
     id: 2,
     title: 'Смартфон UltraMax Pro',
     price: 54990,
-    image: 'https://cdn.poehali.dev/projects/1506aa6c-1df7-4f63-9760-8bcf59a42578/files/39dcfad6-9b13-4ea3-9573-eb1d16035a94.jpg',
+    image: 'https://cdn.poehali.dev/projects/1506aa6c-1df7-4f63-9760-8bcf59a42578/files/0d29c596-d821-4020-bc2d-d74ddb82c0a4.jpg',
     category: 'Смартфоны',
     badge: 'НОВИНКА',
     rating: 4.9,
@@ -49,44 +49,45 @@ const products: Product[] = [
   },
   {
     id: 3,
-    title: 'Умные часы FitTrack',
-    price: 8990,
-    image: 'https://cdn.poehali.dev/projects/1506aa6c-1df7-4f63-9760-8bcf59a42578/files/4a5d01ec-89e7-4056-b724-682b0ace5eae.jpg',
-    category: 'Носимые устройства',
+    title: 'Игровой ноутбук Gaming Pro',
+    price: 89990,
+    image: 'https://cdn.poehali.dev/projects/1506aa6c-1df7-4f63-9760-8bcf59a42578/files/35242471-c1af-4b43-aa00-2dccf5cc3e37.jpg',
+    category: 'Ноутбуки',
+    badge: 'ХИТ',
     rating: 4.7,
     reviews: 189
   },
   {
     id: 4,
-    title: 'Игровая мышь RGB Pro',
-    price: 5990,
-    image: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&h=400&fit=crop',
-    category: 'Аксессуары',
+    title: 'Умные часы FitTrack',
+    price: 8990,
+    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&h=500&fit=crop',
+    category: 'Носимые устройства',
     rating: 4.6,
     reviews: 142
   },
   {
     id: 5,
-    title: 'Механическая клавиатура',
-    price: 12990,
-    image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&h=400&fit=crop',
-    category: 'Аксессуары',
-    badge: 'ХИТ',
-    rating: 4.8,
+    title: 'Беспроводные наушники Sport',
+    price: 7990,
+    image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&h=500&fit=crop',
+    category: 'Аудио',
+    rating: 4.5,
     reviews: 289
   },
   {
     id: 6,
-    title: 'Портативная колонка Bass',
-    price: 7990,
-    image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&h=400&fit=crop',
-    category: 'Аудио',
-    rating: 4.5,
+    title: 'Планшет MediaPad Ultra',
+    price: 32990,
+    image: 'https://images.unsplash.com/photo-1561154464-82e9adf32764?w=500&h=500&fit=crop',
+    category: 'Планшеты',
+    badge: 'НОВИНКА',
+    rating: 4.8,
     reviews: 156
   }
 ];
 
-const categories = ['Все', 'Смартфоны', 'Аудио', 'Носимые устройства', 'Аксессуары'];
+const categories = ['Все', 'Смартфоны', 'Ноутбуки', 'Планшеты', 'Аудио', 'Носимые устройства'];
 
 export default function Index() {
   const [selectedCategory, setSelectedCategory] = useState('Все');
@@ -132,36 +133,12 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b border-border sticky top-0 bg-background/95 backdrop-blur-sm z-50">
+      <header className="border-b sticky top-0 bg-background/95 backdrop-blur-sm z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-8">
-              <h1 className="text-2xl font-bold text-foreground">TechStore</h1>
-              
-              <Sheet>
-                <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="lg:hidden">
-                    <Icon name="Menu" size={24} />
-                  </Button>
-                </SheetTrigger>
-                <SheetContent side="left">
-                  <SheetHeader>
-                    <SheetTitle>Категории</SheetTitle>
-                  </SheetHeader>
-                  <nav className="flex flex-col gap-2 mt-6">
-                    {categories.map(cat => (
-                      <Button
-                        key={cat}
-                        variant={selectedCategory === cat ? "default" : "ghost"}
-                        className="justify-start"
-                        onClick={() => setSelectedCategory(cat)}
-                      >
-                        {cat}
-                      </Button>
-                    ))}
-                  </nav>
-                </SheetContent>
-              </Sheet>
+            <div className="flex items-center gap-2">
+              <Icon name="Zap" className="text-primary" size={28} />
+              <h1 className="text-2xl font-bold">TechShop</h1>
             </div>
 
             <div className="flex-1 max-w-xl hidden md:block">
@@ -169,45 +146,37 @@ export default function Index() {
                 <Icon name="Search" size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                 <Input 
                   placeholder="Поиск товаров..." 
-                  className="pl-10 bg-card"
+                  className="pl-10"
                 />
               </div>
             </div>
 
             <div className="flex items-center gap-2">
               <Button variant="ghost" size="icon">
-                <Icon name="Heart" size={24} />
+                <Icon name="Heart" size={22} />
               </Button>
               <Button variant="ghost" size="icon" className="relative" onClick={() => setIsCartOpen(true)}>
-                <Icon name="ShoppingCart" size={24} />
+                <Icon name="ShoppingCart" size={22} />
                 {totalItems > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold">
+                  <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs">
                     {totalItems}
-                  </span>
+                  </Badge>
                 )}
               </Button>
               <Button variant="ghost" size="icon">
-                <Icon name="User" size={24} />
+                <Icon name="User" size={22} />
               </Button>
-            </div>
-          </div>
-
-          <div className="mt-4 md:hidden">
-            <div className="relative">
-              <Icon name="Search" size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-              <Input 
-                placeholder="Поиск товаров..." 
-                className="pl-10 bg-card"
-              />
             </div>
           </div>
         </div>
       </header>
 
-      <div className="relative h-[400px] bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(15,23,42,0.8)_100%)]"></div>
+      <div className="relative h-[400px] bg-gradient-to-br from-primary/10 via-background to-accent/10 flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(59,130,246,0.15),transparent_50%),radial-gradient(circle_at_70%_50%,rgba(59,130,246,0.1),transparent_50%)]"></div>
         <div className="container mx-auto px-4 z-10 text-center">
-          <h2 className="text-5xl font-bold mb-4">Новейшая электроника</h2>
+          <h2 className="text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            Новейшая электроника
+          </h2>
           <p className="text-xl text-muted-foreground mb-8">Гаджеты и аксессуары для вашего образа жизни</p>
           <Button size="lg" className="font-semibold">
             Смотреть каталог
@@ -219,7 +188,7 @@ export default function Index() {
       <div className="container mx-auto px-4 py-8">
         <div className="flex gap-8">
           <aside className="hidden lg:block w-64 flex-shrink-0">
-            <div className="bg-card rounded-lg p-6 sticky top-24 border border-border">
+            <Card className="p-6 sticky top-24">
               <h2 className="text-lg font-semibold mb-4">Категории</h2>
               <nav className="flex flex-col gap-2">
                 {categories.map(cat => (
@@ -233,73 +202,70 @@ export default function Index() {
                   </Button>
                 ))}
               </nav>
-            </div>
+            </Card>
           </aside>
 
           <main className="flex-1">
-            <div className="mb-6">
+            <div className="mb-6 flex items-center justify-between">
               <h2 className="text-3xl font-bold">
                 {selectedCategory === 'Все' ? 'Популярные товары' : selectedCategory}
               </h2>
-              <p className="text-muted-foreground mt-2">
-                {filteredProducts.length} {filteredProducts.length === 1 ? 'товар' : 'товаров'}
-              </p>
+              <div className="lg:hidden">
+                <Sheet>
+                  <Button variant="outline">
+                    <Icon name="Filter" size={20} className="mr-2" />
+                    Фильтры
+                  </Button>
+                </Sheet>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredProducts.map(product => (
-                <div 
-                  key={product.id}
-                  className="bg-card rounded-lg overflow-hidden border border-border hover:border-primary/50 transition-all duration-300 group hover:shadow-lg hover:shadow-primary/10"
-                >
-                  <div className="relative aspect-square overflow-hidden bg-secondary">
+                <Card key={product.id} className="overflow-hidden group hover:shadow-lg transition-shadow">
+                  <div className="relative aspect-square overflow-hidden bg-muted">
                     <img 
                       src={product.image} 
                       alt={product.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     {product.badge && (
-                      <Badge className="absolute top-3 right-3 bg-primary text-primary-foreground">
+                      <Badge className="absolute top-3 right-3">
                         {product.badge}
                       </Badge>
                     )}
                     <Button
-                      variant="ghost"
+                      variant="secondary"
                       size="icon"
-                      className="absolute top-3 left-3 bg-background/80 backdrop-blur-sm hover:bg-background"
+                      className="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity"
                     >
-                      <Icon name="Heart" size={20} />
+                      <Icon name="Heart" size={18} />
                     </Button>
                   </div>
                   
                   <div className="p-4">
-                    <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors">
-                      {product.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-2">
-                      {product.category}
-                    </p>
+                    <div className="text-sm text-muted-foreground mb-1">{product.category}</div>
+                    <h3 className="font-semibold mb-2 line-clamp-2">{product.title}</h3>
+                    
                     <div className="flex items-center gap-2 mb-3">
                       <div className="flex items-center">
-                        <Icon name="Star" size={16} className="fill-yellow-500 text-yellow-500" />
-                        <span className="text-sm ml-1">{product.rating}</span>
+                        <Icon name="Star" size={16} className="text-yellow-500 fill-yellow-500" />
+                        <span className="ml-1 text-sm font-medium">{product.rating}</span>
                       </div>
-                      <span className="text-xs text-muted-foreground">({product.reviews} отзывов)</span>
+                      <span className="text-sm text-muted-foreground">({product.reviews})</span>
                     </div>
+                    
                     <div className="flex items-center justify-between">
-                      <span className="text-2xl font-bold">
+                      <div className="text-2xl font-bold">
                         {product.price.toLocaleString('ru-RU')} ₽
-                      </span>
-                      <Button 
-                        onClick={() => addToCart(product)}
-                        size="sm"
-                        className="hover:scale-105 transition-transform"
-                      >
-                        <Icon name="ShoppingCart" size={18} />
+                      </div>
+                      <Button onClick={() => addToCart(product)}>
+                        <Icon name="ShoppingCart" size={18} className="mr-2" />
+                        В корзину
                       </Button>
                     </div>
                   </div>
-                </div>
+                </Card>
               ))}
             </div>
           </main>
@@ -309,74 +275,88 @@ export default function Index() {
       <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
         <SheetContent className="w-full sm:max-w-lg">
           <SheetHeader>
-            <SheetTitle>Корзина</SheetTitle>
+            <SheetTitle className="flex items-center gap-2">
+              <Icon name="ShoppingCart" size={24} />
+              Корзина
+              {totalItems > 0 && (
+                <Badge variant="secondary">{totalItems}</Badge>
+              )}
+            </SheetTitle>
           </SheetHeader>
           
-          {cartItems.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-[60vh] text-center">
-              <Icon name="ShoppingCart" size={64} className="text-muted-foreground mb-4" />
-              <p className="text-lg text-muted-foreground">Корзина пуста</p>
-              <Button className="mt-4" onClick={() => setIsCartOpen(false)}>
-                Перейти к покупкам
-              </Button>
-            </div>
-          ) : (
-            <div className="flex flex-col h-full">
-              <div className="flex-1 overflow-y-auto py-4 space-y-4">
-                {cartItems.map(item => (
-                  <div key={item.id} className="flex gap-4 bg-card p-4 rounded-lg border border-border">
-                    <img 
-                      src={item.image} 
-                      alt={item.title}
-                      className="w-20 h-20 object-cover rounded-md"
-                    />
-                    <div className="flex-1">
-                      <h4 className="font-semibold mb-1">{item.title}</h4>
-                      <p className="text-sm text-muted-foreground mb-2">
-                        {item.price.toLocaleString('ru-RU')} ₽
-                      </p>
-                      <div className="flex items-center gap-2">
-                        <Button
-                          size="icon"
-                          variant="outline"
-                          className="h-7 w-7"
-                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                        >
-                          <Icon name="Minus" size={14} />
-                        </Button>
-                        <span className="w-8 text-center">{item.quantity}</span>
-                        <Button
-                          size="icon"
-                          variant="outline"
-                          className="h-7 w-7"
-                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                        >
-                          <Icon name="Plus" size={14} />
-                        </Button>
-                      </div>
-                    </div>
-                    <Button
-                      size="icon"
-                      variant="ghost"
-                      onClick={() => removeFromCart(item.id)}
-                    >
-                      <Icon name="Trash2" size={18} />
-                    </Button>
+          <div className="flex flex-col h-full mt-6">
+            {cartItems.length === 0 ? (
+              <div className="flex-1 flex flex-col items-center justify-center text-center">
+                <Icon name="ShoppingCart" size={64} className="text-muted-foreground mb-4" />
+                <p className="text-lg font-medium mb-2">Корзина пуста</p>
+                <p className="text-muted-foreground">Добавьте товары для оформления заказа</p>
+              </div>
+            ) : (
+              <>
+                <div className="flex-1 overflow-auto -mx-6 px-6">
+                  <div className="space-y-4">
+                    {cartItems.map(item => (
+                      <Card key={item.id} className="p-4">
+                        <div className="flex gap-4">
+                          <img 
+                            src={item.image} 
+                            alt={item.title}
+                            className="w-20 h-20 object-cover rounded"
+                          />
+                          <div className="flex-1">
+                            <h4 className="font-medium mb-1 line-clamp-2">{item.title}</h4>
+                            <p className="text-lg font-bold mb-2">
+                              {item.price.toLocaleString('ru-RU')} ₽
+                            </p>
+                            <div className="flex items-center gap-2">
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="h-8 w-8"
+                                onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                              >
+                                <Icon name="Minus" size={16} />
+                              </Button>
+                              <span className="w-8 text-center font-medium">{item.quantity}</span>
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="h-8 w-8"
+                                onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                              >
+                                <Icon name="Plus" size={16} />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 ml-auto"
+                                onClick={() => removeFromCart(item.id)}
+                              >
+                                <Icon name="Trash2" size={16} />
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      </Card>
+                    ))}
                   </div>
-                ))}
-              </div>
-              
-              <div className="border-t border-border pt-4 mt-4 space-y-4">
-                <div className="flex justify-between items-center text-lg font-semibold">
-                  <span>Итого:</span>
-                  <span>{totalPrice.toLocaleString('ru-RU')} ₽</span>
                 </div>
-                <Button className="w-full" size="lg">
-                  Оформить заказ
-                </Button>
-              </div>
-            </div>
-          )}
+                
+                <div className="border-t pt-4 mt-4 space-y-4">
+                  <div className="flex items-center justify-between text-lg">
+                    <span className="font-medium">Итого:</span>
+                    <span className="text-2xl font-bold">
+                      {totalPrice.toLocaleString('ru-RU')} ₽
+                    </span>
+                  </div>
+                  <Button className="w-full" size="lg">
+                    Оформить заказ
+                    <Icon name="ArrowRight" size={20} className="ml-2" />
+                  </Button>
+                </div>
+              </>
+            )}
+          </div>
         </SheetContent>
       </Sheet>
     </div>
