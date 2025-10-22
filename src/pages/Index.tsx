@@ -77,14 +77,14 @@ const products: Product[] = [
   },
   {
     id: 4,
-    title: 'Умные часы FitTrack',
+    title: 'Умные часы FitTrack Pro',
     price: 8990,
-    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&h=500&fit=crop',
+    image: 'https://cdn.poehali.dev/projects/1506aa6c-1df7-4f63-9760-8bcf59a42578/files/2e26ba98-306d-4267-b417-38eec1537092.jpg',
     category: 'Носимые устройства',
     brand: 'Xiaomi',
     rating: 4.6,
     reviews: 142,
-    inStock: false
+    inStock: true
   },
   {
     id: 5,
@@ -107,6 +107,142 @@ const products: Product[] = [
     badge: 'НОВИНКА',
     rating: 4.8,
     reviews: 156,
+    inStock: true
+  },
+  {
+    id: 7,
+    title: 'Механическая клавиатура RGB Pro',
+    price: 9990,
+    image: 'https://cdn.poehali.dev/projects/1506aa6c-1df7-4f63-9760-8bcf59a42578/files/155b436d-6eeb-4f1b-add1-aead48c54187.jpg',
+    category: 'Аксессуары',
+    brand: 'Xiaomi',
+    badge: 'ХИТ',
+    rating: 4.7,
+    reviews: 345,
+    inStock: true
+  },
+  {
+    id: 8,
+    title: 'Игровая мышь Ultra Gaming',
+    price: 5990,
+    image: 'https://cdn.poehali.dev/projects/1506aa6c-1df7-4f63-9760-8bcf59a42578/files/e684a58c-d822-4746-8bf9-78672e392df5.jpg',
+    category: 'Аксессуары',
+    brand: 'Xiaomi',
+    rating: 4.6,
+    reviews: 278,
+    inStock: true
+  },
+  {
+    id: 9,
+    title: 'Портативная колонка Bass Pro',
+    price: 6990,
+    image: 'https://cdn.poehali.dev/projects/1506aa6c-1df7-4f63-9760-8bcf59a42578/files/3f85ad2f-823c-48d5-a907-5e3cefad5e00.jpg',
+    category: 'Аудио',
+    brand: 'Sony',
+    rating: 4.5,
+    reviews: 198,
+    inStock: true
+  },
+  {
+    id: 10,
+    title: 'Power Bank 20000mAh',
+    price: 3990,
+    image: 'https://cdn.poehali.dev/projects/1506aa6c-1df7-4f63-9760-8bcf59a42578/files/f9218025-a724-4258-8fbc-b22f5272b015.jpg',
+    category: 'Аксессуары',
+    brand: 'Xiaomi',
+    rating: 4.7,
+    reviews: 512,
+    inStock: true
+  },
+  {
+    id: 11,
+    title: 'TWS наушники AirPods Ultra',
+    price: 18990,
+    image: 'https://cdn.poehali.dev/projects/1506aa6c-1df7-4f63-9760-8bcf59a42578/files/a5332fe9-4052-4125-97e1-88cbbdc0dabd.jpg',
+    category: 'Аудио',
+    brand: 'Apple',
+    badge: 'НОВИНКА',
+    rating: 4.9,
+    reviews: 678,
+    inStock: true
+  },
+  {
+    id: 12,
+    title: 'Веб-камера 4K Pro Streaming',
+    price: 11990,
+    image: 'https://cdn.poehali.dev/projects/1506aa6c-1df7-4f63-9760-8bcf59a42578/files/b92313b2-362f-4480-819c-c1ca7e5e76cc.jpg',
+    category: 'Аксессуары',
+    brand: 'Sony',
+    rating: 4.6,
+    reviews: 234,
+    inStock: true
+  },
+  {
+    id: 13,
+    title: 'USB-C Hub MultiPort',
+    price: 4990,
+    image: 'https://cdn.poehali.dev/projects/1506aa6c-1df7-4f63-9760-8bcf59a42578/files/7c78b7ca-3c2c-4d08-8d7b-b715ddcf3bb1.jpg',
+    category: 'Аксессуары',
+    brand: 'Samsung',
+    rating: 4.5,
+    reviews: 189,
+    inStock: true
+  },
+  {
+    id: 14,
+    title: 'Игровая гарнитура Esports Pro',
+    price: 14990,
+    image: 'https://cdn.poehali.dev/projects/1506aa6c-1df7-4f63-9760-8bcf59a42578/files/fd30828a-b7ae-4277-bdb7-701f3727bbe6.jpg',
+    category: 'Аудио',
+    brand: 'Sony',
+    badge: 'ХИТ',
+    rating: 4.8,
+    reviews: 456,
+    inStock: true
+  },
+  {
+    id: 15,
+    title: 'Беспроводное зарядное устройство Qi',
+    price: 2990,
+    image: 'https://cdn.poehali.dev/projects/1506aa6c-1df7-4f63-9760-8bcf59a42578/files/a028838b-277c-4a73-ba4c-e5f249b2841f.jpg',
+    category: 'Аксессуары',
+    brand: 'Samsung',
+    rating: 4.4,
+    reviews: 167,
+    inStock: true
+  },
+  {
+    id: 16,
+    title: 'Внешний SSD 1TB',
+    price: 12990,
+    image: 'https://cdn.poehali.dev/projects/1506aa6c-1df7-4f63-9760-8bcf59a42578/files/e83f1bf1-d724-4dad-8d2a-97a40b7ba7c4.jpg',
+    category: 'Аксессуары',
+    brand: 'Samsung',
+    rating: 4.7,
+    reviews: 389,
+    inStock: true
+  },
+  {
+    id: 17,
+    title: 'Умная колонка SmartHome',
+    price: 7990,
+    image: 'https://cdn.poehali.dev/projects/1506aa6c-1df7-4f63-9760-8bcf59a42578/files/5ad98419-15cc-482e-b7b2-adeea815a582.jpg',
+    category: 'Носимые устройства',
+    brand: 'Xiaomi',
+    rating: 4.5,
+    reviews: 298,
+    inStock: true
+  },
+  {
+    id: 18,
+    title: 'Смартфон Galaxy S24 Ultra',
+    price: 79990,
+    image: 'https://images.unsplash.com/photo-1592286927505-c6d5901c5c39?w=500&h=500&fit=crop',
+    category: 'Смартфоны',
+    brand: 'Samsung',
+    badge: 'НОВИНКА',
+    rating: 4.9,
+    reviews: 834,
     inStock: true
   }
 ];
